@@ -5,8 +5,8 @@ import Home from '@/components/pages/HomePage'
 import ImportacaoPage from '@/components/pages/ImportacaoPage'
 import DistribuicaoPage from '@/components/pages/DistribuicaoPage'
 import DiscursoPage from '@/components/pages/DiscursoPage'
-import SumarioPage from '@/components/pages/SumarioPage'
-import RevisaoPage from '@/components/pages/RevisaoPage'
+//import SumarioPage from '@/components/pages/SumarioPage'
+//import RevisaoPage from '@/components/pages/RevisaoPage'
 
 Vue.use(VueRouter)
 
@@ -29,11 +29,11 @@ const routes = [{
 }, {
     name: 'sumariopage',
     path: '/sumario',
-    component: SumarioPage
+    component: DiscursoPage //SumarioPage
 }, {
     name: 'revisaopage',
     path: '/revisao',
-    component: RevisaoPage
+    component: DiscursoPage //RevisaoPage
 }]
 
 const router = new VueRouter({

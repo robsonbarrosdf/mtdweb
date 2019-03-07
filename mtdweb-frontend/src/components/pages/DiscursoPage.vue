@@ -23,7 +23,9 @@ export default {
     components: { Menu, MenuButton, PageTitle, DiscursoForm },
     computed: mapState(['isMenuVisible']),
     beforeCreate() {
-        this.$store.commit("setPerfilSelecionado", 'Discurso');
+        // this.$store.commit("setPerfilSelecionado", 'Discurso');
+        const rota = this.$route.path
+        this.$store.commit("setPerfilSelecionado", rota);
     },
 
 }

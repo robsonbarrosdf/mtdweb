@@ -19,7 +19,7 @@
         </div>
 
         <div class='title'>
-            {{ perfilSelecionado.titulo }}
+            {{ perfilSelecionado ? perfilSelecionado.titulo : '---'}}
         </div>
 
         <UserDropdown v-if='!hideUserDropdown' />
