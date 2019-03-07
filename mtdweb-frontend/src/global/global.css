@@ -10,3 +10,16 @@
     /* background-color: orange; */
     overflow: auto;
 }
+
+.textoLabel {
+    font-size: .9rem;
+    text-decoration: none;
+    color: black;
+    margin: 1px;
+    padding: 0px;
+}
+
+.textoLabelComLink:hover {
+    text-decoration: none;
+    color: grey;
+}

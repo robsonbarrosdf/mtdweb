@@ -26,8 +26,8 @@ export default {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
-        width: 300px;
-
+        /* width: 300px; */
+        min-width: 300px;
         /* overflow: hidden; */
     }
 

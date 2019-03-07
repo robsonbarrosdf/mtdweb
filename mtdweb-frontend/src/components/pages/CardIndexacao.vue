@@ -1,21 +1,32 @@
 <template>
     <div id='cardIndexacao'>
 
-        <b-button variant="primary" v-b-toggle.indexacao class='toggleButtonCard' id="toggleButtonTexto">Classificação</b-button>
+        <b-button variant="primary" v-b-toggle.indexacao class='toggleButtonCard' id="toggleButtonTexto">Indexação</b-button>
         <b-collapse visible id="indexacao">
             <b-card class='cardFields'>
 
                 <b-row>
                     <b-col md='6' sm='12'>
-                        <b-form-group label-size='sm' label='Indexação (TECAD):' label-for='indexacaoTecad'>
+                        <!-- <b-form-group label-size='sm' label='Indexação (TECAD):' label-for='indexacaoTecad'>
                             <b-form-textarea id="indexacaoTecad" size="sm" type="text" placeholder="..." />
-                        </b-form-group>
+                        </b-form-group> -->
+                        <div>
+                            <a class='textoLabel textoLabelComLink' href="#" v-b-tooltip.hover title="Acessar Tecad" >Indexação&nbsp;
+                                <i class="fa fa-external-link"></i>
+                            </a>
+                        </div>
+                        <!-- <textarea class="edit-sumario"></textarea> -->
+                        <b-form-textarea id="indexacaoTecad" size="sm" placeholder="..." />
                     </b-col>
 
+
                     <b-col md='6' sm='12'>
-                        <b-form-group label-size='sm' label='Indexação Livre:' label-for='indexacaoLivre'>
-                            <b-form-textarea id="indexacaoLivre" size="sm" type="text" placeholder="..." />
-                        </b-form-group>
+                        <!-- <b-form-group label-size='sm' label='Indexação Livre:' label-for='indexacaoLivre'>
+                            <b-form-textarea id="indexacaoLivre" size="sm" placeholder="..." />
+                        </b-form-group> -->
+                        <label class='textoLabel' for='indexacaoLivre'>Indexação Livre</label>
+                        <b-form-textarea id="indexacaoLivre" size="sm" placeholder="..." />
+
                     </b-col>
                 </b-row>
 
