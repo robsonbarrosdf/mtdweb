@@ -4,6 +4,7 @@ node_modules
 node_modules/
 /dist
 
+#teste
 # local env files
 .env.local
 .env.*.local
