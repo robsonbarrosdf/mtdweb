@@ -2,7 +2,8 @@ const app = require('express')()
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const encontros = require('./dados/encontros.json')
-const discursos = require('./dados/discursos748.json')
+const discursos748 = require('./dados/discursos748.json')
+const discursos346 = require('./dados/discursos346.json')
 
 const resultadosPorPagina = 8
 
@@ -12,54 +13,115 @@ const resultadosPorPagina = 8
     //     next();
     //   });
     
+
+const fnTrataEncontro = e => {
+
+    let anoEncontro = (new Date(e.datEncontro)).getFullYear()
+
+    return {
+        codTipoEncontro: e.codTipoEncontro,
+        codEncontro: e.codEncontro,
+        prefixo : (e.codTipoEncontro == 1 ? 'COM ' : 'PLEN '),
+        numEncontro: e.numEncontro,
+        anoEncontro: anoEncontro,
+        dataHora: new Date(e.datEncontro),
+        dataHoraInicio: new Date(e.dtHoraInicio),
+        dataHoraFim: new Date(e.dtHoraFim),
+        codSileg: e.codSileg,
+        importada: (e.Importada==1 ? 'S' : 'N'),
+        pendente: (e.Pendente=='S' ? 'S' : 'N'),
+        nomOrgao: (e.nomOrgao ? e.nomOrgao.trim() : e.nomOrgao),
+        tipoSessaoReuniao: (e.tipoEncontro ? e.tipoEncontro.trim() : e.tipoEncontro)
+    }
+}
+
 app.use(bodyParser.json())
 app.use(cors())
 
-app.get('/discursosparadistribuir', (req, res) => {
-    let codEncontro = req.query.codEncontro
-    let discursos2 = discursos.map((d, index) => {
+app.get('/discursos/usuario/:ponto', (req, res) => {
+
+    let ponto = req.query.ponto
+    let discursosAux
+    if (ponto=6406) {
+        discursosAux = discursos346
+    } else {
+        discursosAux = discursos748
+    }
+
+    let discursos2 = discursosAux.map((d, index) => {
         return {
             //new Discurso(1, 1, 'COM 11111/2019', 1, 1, 'Indexador A', 'Sumarista B', 'Revisor C'),
-            codTipoEncontro: 2,
+            // tituloEncontro: 'PLEN 1/2019',
+
+            ...d,
             codEncontro: d.cod_encontro,
-            tituloEncontro: 'PLEN 1/2019',
-            codDiscurso: index,
+            codTipoEncontro: 2, 
             numeroDiscurso: d.nuOrdem,
-            indexador: 'indexador 748',
-            sumarista: 'sumarista 748',
-            revisor: 'revisor 748'  
+            codDiscurso: index
         }
     })
     res.send(discursos2)
-    //console.log('TESTEEEEEEEE')
+
+})
+
+app.get('/discursos/:id', (req, res) => {
+    let id = req.query.id
+    let discursosAux = discursos346
+    discursosAux = discursosAux.filter(d => d.nuOrdem == id)
+    res.send(discursosAux)
+})
+
+app.get('/discursosparadistribuir', (req, res) => {
+    let codEncontro = req.query.codEncontro
+    let discursosAux
+    if (codEncontro==346) {
+        discursosAux = discursos346
+    } else {
+        discursosAux = discursos748
+    }
+    let discursos2 = discursosAux.map((d, index) => {
+        return {
+            //new Discurso(1, 1, 'COM 11111/2019', 1, 1, 'Indexador A', 'Sumarista B', 'Revisor C'),
+            // tituloEncontro: 'PLEN 1/2019',
+
+            ...d,
+            codEncontro: d.cod_encontro,
+            codTipoEncontro: 2, 
+            numeroDiscurso: d.nuOrdem,
+            codDiscurso: index,
+            indexador: 'Indexador ' + codEncontro,
+            sumarista: 'Sumarista ' + codEncontro,
+            revisor: 'Revisor ' + codEncontro  
+        }
+    })
+    res.send(discursos2)
+})
+
+app.get('/encontros/:id', (req, res) => {
+    // console.log('testeee', req.params)
+    let encontrosAux = encontros.filter(e => e.codEncontro == req.params.id)
+    encontrosAux = encontrosAux.map(fnTrataEncontro)
+    if (encontrosAux && encontrosAux.length > 0 ) encontrosAux = encontrosAux[0]
+    res.send(encontrosAux)
 })
 
 app.get('/encontros', (req, res) => {
-    //console.log(encontros)
 
     let dtIni = req.query['dataInicial']
     let dtFim = req.query['dataFinal']
-    let texto = req.query['titulo']
-    let bReuniao = req.query['reuniao'] === 'true'
-    let bSessao = req.query['sessao'] === 'true'
 
-    let encontros2 = encontros.map(e => {
-        let anoEncontro = (new Date(e.datEncontro)).getFullYear()
-        let titEncontro = (e.codTipoEncontro == 1 ? 'COM ' : 'PLEN ') + e.numEncontro.trim() + '/' + anoEncontro
-        let numEncontro = !e.numEncontro ? e.numEncontro : Number(e.numEncontro.trim())
-        titEncontro = !titEncontro ? titEncontro : titEncontro.trim() 
-        return {
-            codTipo: e.codTipoEncontro,
-            codEncontro: e.codEncontro,
-            titulo : titEncontro,
-            numero: numEncontro,
-            ano: anoEncontro,
-            dataHora: new Date(e.datEncontro),
-            codSileg: e.codSileg,
-            importada: (e.Importada==1 ? 'S' : 'N'),
-            pendente: (e.Pendente=='S' ? 'S' : 'N')
-        }
-    })
+    let texto = req.query['titulo']
+ 
+    let bReuniao = true //req.query['reuniao'] === 'true'
+    let bSessao = true //req.query['sessao'] === 'true'
+
+    let tipoEncontroSelecionado = req.query['tipoEncontroSelecionado']
+    if (tipoEncontroSelecionado && tipoEncontroSelecionado.length>0) {
+        bReuniao = tipoEncontroSelecionado.indexOf('reunião')>-1
+        bSessao = tipoEncontroSelecionado.indexOf('sessão')>-1
+    }
+
+    let encontros2 = encontros.map(fnTrataEncontro)
 
     // console.log("")
     // console.log("Parâmetros: ", req.query)
@@ -75,16 +137,20 @@ app.get('/encontros', (req, res) => {
         //     result = result && e.dataHora<=(new Date(dtFim))
         // }
 
-        if (!!texto) {
-            result = result && e.titulo.search(texto)>=0
+        if (texto) {
+            if (e.numEncontro) {
+                result = result && e.numEncontro.toString().concat('.', e.anoEncontro).search(texto)>=0 
+            } else {
+                result = false
+            }
         }
 
         if(bReuniao && bSessao) {
-            result = result && (e.codTipo==1 || e.codTipo==2)
+            result = result && (e.codTipoEncontro==1 || e.codTipoEncontro==2)
         } else if(bReuniao) {
-            result = result && e.codTipo==1
+            result = result && e.codTipoEncontro==1
         } else if(bSessao) {
-            result = result && e.codTipo==2
+            result = result && e.codTipoEncontro==2
         }
 
         return result
@@ -105,7 +171,9 @@ app.get('/encontros', (req, res) => {
 
     
     res.send({
-        data:encontros4, count: encontros3.length, limit:localResultadosPorPagina
+        data:encontros4,
+        count: encontros3.length, 
+        limit:localResultadosPorPagina
     })
     
     // console.log(encontros4)
@@ -113,8 +181,9 @@ app.get('/encontros', (req, res) => {
     // console.log(localResultadosPorPagina)
     // console.log('Resultado Final: ' + encontros3.length)
     // console.log('Resultado Final2: ' + encontros4.length)
+    // console.log(encontros4[0])
     // console.log(req.query)
-
+    
 })
 
 app.listen(4000, () => {

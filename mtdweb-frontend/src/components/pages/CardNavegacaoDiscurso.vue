@@ -4,15 +4,16 @@
             <b-pagination-nav size='sm' total-rows='100' :number-of-pages='1' />
         </div>
         <div id='discursoInfo' class='p-1'>
-            <h3>RODRIGO MAIA (DEM-RJ)</h3>
-            <h5>00/00/00 - 00:00</h5>
+            <h3>{{discurso.nmOrador + '(' + discurso.sgPartido + '-' + discurso.sgUf + ')'}}</h3>
+            <h5>{{discurso.dtHoraInicioDiscurso}}</h5>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'CardNavegacaoDiscurso'
+    name: 'CardNavegacaoDiscurso',
+    props: ['discurso'],
 }
 </script>
 

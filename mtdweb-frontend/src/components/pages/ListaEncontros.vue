@@ -31,20 +31,7 @@ export default {
       page: 1,
       count: 0,
       colunas: [
-        { key: "codTipo", thClass: "d-none", tdClass: "d-none" },
-        { key: "codEncontro", thClass: "d-none", tdClass: "d-none" },
-        {
-          key: "titulo",
-          label: "Encontros",
-          sortable: true,
-          thClass: "cabecalho",
-          tdClass: "dados"
-        },
-        { key: "numero", thClass: "d-none", tdClass: "d-none" },
-        { key: "ano", thClass: "d-none", tdClass: "d-none" }, //label: 'Ano', sortable: true},
-        { key: "dataHora", thClass: "d-none", tdClass: "d-none" },
-        { key: "codSileg", thClass: "d-none", tdClass: "d-none" }
-        //{key: 'actions', label: 'Ações'}
+        { key: "titulo", label: "Encontros", sortable: true, thClass: "cabecalho", tdClass: "dados"}
       ]
     };
   },
@@ -59,17 +46,30 @@ export default {
           }
         })
         .then(res => {
+
           this.encontrosParaDistribuir = res.data.data;
-          this.encontrosParaDistribuir = this.encontrosParaDistribuir.filter(
-            e => e.importada == "S"
-          );
+          // this.encontrosParaDistribuir = this.encontrosParaDistribuir.filter(
+          //   e => e.importada == "S"
+          // )
+
+          this.encontrosParaDistribuir = this.encontrosParaDistribuir.map(e => {
+              return {
+                  ...e,
+                  titulo: (e.codTipoEncontro==1 ? 'Reunião ' + e.numEncontro : 'Sessão ' + e.numEncontro + '.' + e.anoEncontro)                        
+                  //dataHora: trataDataHora(e)
+              }
+          })          
+
           this.count = this.encontrosParaDistribuir.length;
-        });
+
+        })
+
     },
 
     pesquisar(parametros) {
       this.page = 1;
       this.parametros = { ...parametros };
+      // console.log(this.parametros)
       this.loadEncontros();
     },
 
@@ -94,30 +94,30 @@ export default {
 </script>
 
 <style>
-#listaEncontros {
-  /* background-color: red; */
-  color: #fff;
-  /* height: 400px;
-        overflow: hidden; */
-}
+  #listaEncontros {
+    /* background-color: red; */
+    color: #fff;
+    /* height: 400px;
+          overflow: hidden; */
+  }
 
-#tabela {
-  /* overflow: hidden; */
-  /* height: 400px; */
-  border: none;
-}
+  #tabela {
+    /* overflow: hidden; */
+    /* height: 400px; */
+    border: none;
+  }
 
-.cabecalho,
-.dados {
-  color: #fff;
-}
+  .cabecalho,
+  .dados {
+    color: #fff;
+  }
 
-.cabecalho:hover,
-.dados:hover {
-  background-color: rgb(56, 170, 185);
-}
+  .cabecalho:hover,
+  .dados:hover {
+    background-color: rgb(56, 170, 185);
+  }
 
-#listaEncontros hr {
-    background-color: red;
-}
+  #listaEncontros hr {
+      background-color: red;
+  }
 </style>

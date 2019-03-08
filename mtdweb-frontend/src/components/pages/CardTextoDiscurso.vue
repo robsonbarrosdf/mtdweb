@@ -6,7 +6,7 @@
             <b-card class='cardFields'>
 
                 <b-form-group label-size='sm' label="Texto:" label-for="texto-discurso">
-                    <VueEditor placeholder="Texto do discurso..." :editorToolbar='customToolbar' />
+                    <VueEditor v-model='discurso.txtDiscurso' placeholder="Texto do discurso..." :editorToolbar='customToolbar' />
                 </b-form-group>      
 
                 <b-tabs card>
@@ -29,6 +29,7 @@
 import { VueEditor } from "vue2-editor"
 export default {
     name: 'CardTextoDiscurso',
+    props: ['discurso'],
     components: { VueEditor },
     data() {
         return {

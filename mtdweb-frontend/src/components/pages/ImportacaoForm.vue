@@ -1,11 +1,16 @@
 <template>
     <div class="importacao-form">
-        <b-table small hover :items='encontros' :fields='colunas'>
+        <b-table small hover :items='encontros' :fields='colunas' class='tableImportacao'>
+            <!-- <template slot="status" slot-scope="data">
+                <i class="fa fa-circle" style='color: red;' v-if='data.item.pendente=="S"'></i>
+                <i class="fa fa-circle" style='color: green;' v-if='data.item.pendente=="N"'></i>
+            </template>          -->
+
             <template slot="actions" slot-scope="data">
-                <b-button id='btnImportar' v-b-tooltip.hover title="Importar Encontro do Escriba" variant="warning" @click="importarEncontroEscriba(data.item)" class="mr-2" v-if='data.item.importada=="N"'>
+                <b-button size='sm' id='btnImportar' v-b-tooltip.hover title="Importar Encontro do Escriba" variant="warning" @click="importarEncontroEscriba(data.item)" class="mr-2" v-if='data.item.importada=="N"'>
                     <i class="fa fa-arrow-right"></i>
                 </b-button>
-                <b-button id='btnRemover' v-b-tooltip.hover title="Remover Encontro do MTD" variant="danger" @click="removerEncontroMTD(data.item)" v-if='data.item.importada=="S"'>
+                <b-button size='sm' id='btnRemover' v-b-tooltip.hover title="Remover Encontro do MTD" variant="danger" @click="removerEncontroMTD(data.item)" v-if='data.item.importada=="S"'>
                     <i class="fa fa-trash"></i>
                 </b-button>
             </template>            
@@ -37,13 +42,13 @@ export default {
             count: 0,
             encontros: [],
             colunas: [
-                {key: 'codTipo', label: 'Tipo', sortable: true, tdClass: 'tipoEncontro', formatter: value => value==1 ? 'R' : 'S'},
-                {key: 'codEncontro', thClass: 'd-none', tdClass: 'd-none'},
-                {key: 'titulo', label: 'Título', sortable: true},
-                {key: 'numero', thClass: 'd-none', tdClass: 'd-none'}, //label: 'Número', sortable: true},
-                {key: 'ano', thClass: 'd-none', tdClass: 'd-none'}, //label: 'Ano', sortable: true},
+                {key: 'titulo', label: 'Encontro', sortable: true},
                 {key: 'dataHora', label: 'Data', sortable: true, formatter: value => getDataFormatada(value) + ' ' + getHoraFormatada(value).substr(0,5)}, 
-                {key: 'codSileg', thClass: 'd-none', tdClass: 'd-none'},
+                {key: 'tipoSessaoReuniao', label: 'Tipo', sortable: true},
+                {key: 'nomOrgao', label: 'Órgão', sortable: true},
+                {key: 'pendente', label: 'Pendente', sortable: true, tdClass: 'pendente importada', formatter: value => value=='N' ? 'Não' : 'Sim'},
+                // {key: 'status', label: 'Status'},
+                {key: 'importada', label: 'Importada', sortable: true, tdClass: 'importada', formatter: value => value=='N' ? 'Não' : 'Sim'},
                 {key: 'actions', label: 'Ações'}
             ]
         }
@@ -62,9 +67,15 @@ export default {
                 this.encontros = res.data.data
                 this.count = res.data.count
                 this.limit = res.data.limit
+
+                this.encontros = this.encontros.map(e => {
+                    return {
+                        ...e,
+                        titulo: (e.codTipoEncontro==1 ? 'Reunião ' + e.numEncontro : 'Sessão ' + e.numEncontro + '.' + e.anoEncontro)                        
+                        //dataHora: trataDataHora(e)
+                    }
+                })
             })
-            
-            
         },
 
         pesquisar(parametros) {
@@ -107,6 +118,18 @@ export default {
         border: 1px solid rgba(0,0,0,0.2);
         box-shadow: 0 1px 5px rgba(0,0,0,0.15);
         overflow: hidden;
+    }
+
+    .tableImportacao {
+        font-size: .9rem;
+    }
+
+    .pendente {
+        text-align: center;
+    }
+
+    .importada {
+        text-align: center;
     }
 
 </style>

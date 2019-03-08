@@ -2,6 +2,7 @@
     <aside class="menu">
         <ParametrosPesquisa container='div-on-menu' v-if='showSearchParams'/>
         <ListaEncontros v-if='perfilSelecionado.nome=="Distribuição"' />
+        <ListaDiscursos v-if='["Discurso","Sumário","Revisão"].indexOf(perfilSelecionado.nome)>-1' />
     </aside>
 </template>
 
@@ -9,10 +10,11 @@
 import { mapState } from 'vuex'
 import ParametrosPesquisa from '../pages/ParametrosPesquisa'
 import ListaEncontros from '../pages/ListaEncontros'
+import ListaDiscursos from '../pages/ListaDiscursos'
 export default {
     name: 'Menu',
     props: ['showSearchParams'],
-    components: { ParametrosPesquisa, ListaEncontros },
+    components: { ParametrosPesquisa, ListaEncontros, ListaDiscursos },
     computed: mapState(['isMenuVisible', 'perfilSelecionado'])
 }
 </script>

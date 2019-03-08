@@ -1,7 +1,7 @@
 <template>
     <div class="distribuicao-form">
         <CardCabecalhoEncontro :encontro='encontroSelecionado'/>
-        <b-table hover :items='discursos' :fields='colunas'></b-table>
+        <b-table class='tableDistribuicao' small hover :items='discursos' :fields='colunas'></b-table>
     </div>
 </template>
 
@@ -16,16 +16,15 @@ export default {
     data: function() {
         return {
             encontroSelecionado: {
-                titulo: '000',
+                numEncontro: '--',
+                anoEncontro: '--',
+                tipoSessaoReuniao: '-----',
                 dataHora: '00/00/00 00:00:00'
             },
             discursos: [],
             colunas: [
-                {key: 'codTipoEncontro', thClass: 'd-none', tdClass: 'd-none'},
-                {key: 'codEncontro', thClass: 'd-none', tdClass: 'd-none'},
-                {key: 'tituloEncontro', thClass: 'd-none', tdClass: 'd-none'},
-                {key: 'codDiscurso', thClass: 'd-none', tdClass: 'd-none'},
-                {key: 'numeroDiscurso', label: 'Núm. Discurso'},
+                {key: 'numeroDiscurso', label: '#'},
+                {key: 'parlamentar', label: 'Orador'},
                 {key: 'indexador', sortable: true},
                 {key: 'sumarista', sortable: true},
                 {key: 'revisor', sortable: true},
@@ -43,7 +42,9 @@ export default {
         }, 
         pesquisar() {
             this.encontroSelecionado = {
-                titulo: '000',
+                numEncontro: '--',
+                anoEncontro: '--',
+                tipoSessaoReuniao: '-----',
                 dataHora: '00/00/00 00:00:00'
             }
             this.discursos = []
@@ -56,7 +57,28 @@ export default {
         },
 
         loadDiscursosEncontro(encontro) {
-            if (encontro.numero % 2 == 0) {
+            this.encontroSelecionado = encontro
+            if (encontro.numEncontro==230) {
+                // axios.get(`http://localhost:4000/encontros/${encontro.codEncontro}`)
+                // .then(res => {
+                //     this.encontroSelecionado = res.data
+                // })
+
+                axios.get('http://localhost:4000/discursosparadistribuir', {
+                    params:{
+                        codEncontro: encontro.codEncontro
+                    }
+                })
+                .then(res => {
+                    this.discursos=res.data
+                    this.discursos = this.discursos.map(d => {
+                        return {
+                            ...d,
+                            parlamentar: (d.nmOrador + ' (' + d.sgPartido + '/' + d.sgUf + ')')
+                        }
+                    })
+                })
+            } else if (encontro.numEncontro % 2 == 0) {
                 this.pesquisar()
             } else {
                 axios.get('http://localhost:4000/discursosparadistribuir', {
@@ -64,7 +86,6 @@ export default {
                         codEncontro: encontro.codEncontro
                     }
                 }).then(res => this.discursos=res.data)
-                this.encontroSelecionado = encontro
             }
         }
 
@@ -98,4 +119,7 @@ export default {
         overflow: hidden;    
     }
 
+    .tableDistribuicao {
+        font-size: .9rem;
+    }
 </style>

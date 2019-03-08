@@ -24,7 +24,7 @@
                 <b-row>
                     <b-col lg='6' sm='12'>
                     <b-form-group label-size='sm' label='Orador:' label-for='orador'>
-                        <b-form-input size='sm' label='sm' id='orador' type='text' placeholder='...' />
+                        <b-form-input size='sm' label='sm' id='orador' type='text' placeholder='...' v-model='discurso.nmOrador' />
                     </b-form-group>
                     </b-col>
 
@@ -56,6 +56,7 @@
 <script>
 export default {
     name: 'CardOradorDiscurso',
+    props: ['discurso'],
     data() {
       return {
         selectedFase: null,

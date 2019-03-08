@@ -6,16 +6,16 @@
             </b-button>
         </div>         -->
 
-        <CardCabecalhoEncontro :encontro='encontro'/>
-        <CardNavegacaoDiscurso />
+        <CardCabecalhoEncontro :encontro='encontroDoDiscurso'/>
+        <CardNavegacaoDiscurso :discurso='discursoSelecionado'/>
 
         <b-form>
 
-            <CardOradorDiscurso />
+            <CardOradorDiscurso :discurso='discursoSelecionado'/>
             <div class="mb-2"></div>
             <CardPublicacao />
             <div class="mb-2"></div>
-            <CardTextoDiscurso />
+            <CardTextoDiscurso :discurso='discursoSelecionado'/>
             <div class="mb-2"></div>
             <CardIndexacao />            
 
@@ -60,17 +60,33 @@ import CardOradorDiscurso from './CardOradorDiscurso'
 import CardTextoDiscurso from './CardTextoDiscurso'
 import CardPublicacao from './CardPublicacao'
 import CardIndexacao from './CardIndexacao'
+import axios from 'axios'
 
 export default {
     name: 'DiscursoForm',
     components: { CardCabecalhoEncontro, CardNavegacaoDiscurso, CardOradorDiscurso, CardTextoDiscurso, CardPublicacao, CardIndexacao },
     data: function() {
         return {
-            encontro: {
-                titulo: '000',
-                dataHora: '00/00/00 00:00:00'
-            }
+            discursoSelecionado: {},
+            encontroDoDiscurso: { codSileg: 500 }
         }
+    },
+    methods: {
+        displayItemSelecionado(discurso) {
+            this.loadDiscurso(discurso)
+        },
+
+        loadDiscurso(discurso) {
+            let codEncontro = 346
+            axios.get(`http://localhost:4000/encontros/${codEncontro}`)
+            .then(res => {
+                this.encontroDoDiscurso = res.data
+                this.discursoSelecionado = discurso
+            })
+        }
+    },
+    created() {
+        this.$store.state.displayResultComponent = this
     }
 }
 </script>
