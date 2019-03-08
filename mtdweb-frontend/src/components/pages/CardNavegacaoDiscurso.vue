@@ -26,6 +26,7 @@ export default {
         /* border: 1px solid grey; */
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); 
         border-radius: 4px;
+        border-radius: 3px;
     }
 
     #pageInfo {
