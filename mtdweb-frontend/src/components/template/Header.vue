@@ -13,13 +13,14 @@
         <div class='pl-3 home'>
             <h1 class='title'>
                 <router-link class='title' to='/'>
-                    <i class="fa fa-home"></i>
+                    <i class="fa fa-home fa-lg"></i>
                 </router-link>
             </h1>
         </div>
 
         <div class='title'>
             {{ perfilSelecionado ? perfilSelecionado.titulo + ' BRANCH 2 ' : '---'}}
+            {{ perfilSelecionado ? perfilSelecionado.titulo + 'MASTER' : '---'}}
         </div>
 
         <UserDropdown v-if='!hideUserDropdown' />
