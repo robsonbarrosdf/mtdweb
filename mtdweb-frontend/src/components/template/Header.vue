@@ -19,7 +19,7 @@
         </div>
 
         <div class='title'>
-            {{ perfilSelecionado ? perfilSelecionado.titulo : '---'}}
+            {{ perfilSelecionado ? perfilSelecionado.titulo + ' BRANCH 2 ' : '---'}}
         </div>
 
         <UserDropdown v-if='!hideUserDropdown' />
