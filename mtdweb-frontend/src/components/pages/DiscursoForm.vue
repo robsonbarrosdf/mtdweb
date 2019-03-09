@@ -60,7 +60,7 @@ import CardOradorDiscurso from './CardOradorDiscurso'
 import CardTextoDiscurso from './CardTextoDiscurso'
 import CardPublicacao from './CardPublicacao'
 import CardIndexacao from './CardIndexacao'
-import axios from 'axios'
+// import axios from 'axios'
 
 export default {
     name: 'DiscursoForm',
@@ -72,21 +72,10 @@ export default {
         }
     },
     methods: {
-        displayItemSelecionado(discurso) {
-            this.loadDiscurso(discurso)
-        },
-
-        loadDiscurso(discurso) {
-            let codEncontro = 346
-            axios.get(`http://localhost:4000/encontros/${codEncontro}`)
-            .then(res => {
-                this.encontroDoDiscurso = res.data
-                this.discursoSelecionado = discurso
-            })
+        updateDiscursoSelecionado(discurso, encontro) {
+            this.discursoSelecionado = {...discurso}
+            this.encontroDoDiscurso = encontro
         }
-    },
-    created() {
-        this.$store.state.displayResultComponent = this
     }
 }
 </script>

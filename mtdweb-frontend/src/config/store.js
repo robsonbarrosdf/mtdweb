@@ -12,10 +12,17 @@ export default new Vuex.Store({
         perfilSelecionado: null,
         user: userFake,
         //currentComponentPage: null
-        searchComponent: null,
-        displayResultComponent: null,
-        encontroSelecionado: null,
-        infoPagina: null
+        // searchComponent: null,
+        // displayResultComponent: null,
+        // encontroSelecionado: null,
+
+        infoPagina: null,
+
+        _eventHandler: new Map()
+    },
+    getters: {
+        // eventBusPage: (state, eventName) => state._eventBusPage.get(eventName)
+        eventHandler: state => eventName => state._eventHandler.get(eventName)
     },
     mutations: {
         toggleMenu(state, isVisible) {      
@@ -40,7 +47,12 @@ export default new Vuex.Store({
 
         setEncontroSelecionado(state, encontro) {
             state.encontroSelecionado = encontro
+        },
+
+        setEventHandler(state, {eventName, handler}) {
+            state._eventHandler.set(eventName, handler)
         }
 
     }
+
 })

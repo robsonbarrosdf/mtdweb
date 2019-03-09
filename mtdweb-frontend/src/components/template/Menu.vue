@@ -1,8 +1,18 @@
 <template>
     <aside class="menu">
-        <ParametrosPesquisa container='div-on-menu' v-if='showSearchParams'/>
-        <ListaEncontros v-if='perfilSelecionado.nome=="Distribuição"' />
-        <ListaDiscursos v-if='["Discurso","Sumário","Revisão"].indexOf(perfilSelecionado.nome)>-1' />
+        <ParametrosPesquisa 
+            v-if='showSearchParams'
+            @click-pesquisar='clickPesquisar' 
+            container='div-on-menu' />
+
+        <ListaEncontros 
+            v-if='perfilSelecionado.nome=="Distribuição"'
+            ref='listaEncontros' />
+
+        <ListaDiscursos 
+            v-if='["Discurso","Sumário","Revisão"].indexOf(perfilSelecionado.nome)>-1' 
+            :discursosDoUsuario='discursosDoUsuario'
+            @click-discurso='clickDiscurso' />
     </aside>
 </template>
 
@@ -13,9 +23,17 @@ import ListaEncontros from '../pages/ListaEncontros'
 import ListaDiscursos from '../pages/ListaDiscursos'
 export default {
     name: 'Menu',
-    props: ['showSearchParams'],
+    props: ['showSearchParams', 'discursosDoUsuario'],
     components: { ParametrosPesquisa, ListaEncontros, ListaDiscursos },
-    computed: mapState(['isMenuVisible', 'perfilSelecionado'])
+    computed: mapState(['isMenuVisible', 'perfilSelecionado']),
+    methods: {
+        clickDiscurso(discurso) {
+            this.$emit('click-discurso', discurso)
+        },
+        clickPesquisar(parametros, resultado) {
+            this.$emit('click-pesquisar', parametros, resultado, this.$refs.listaEncontros)
+        }
+    }
 }
 </script>
 

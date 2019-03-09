@@ -75,7 +75,7 @@ export default {
 
     onRowClicked(item) { //onRowClicked(item, index, event) {
       this.itemSelecionado = item;
-      this.$store.state.displayResultComponent.displayItemSelecionado(item);
+      this.$store.getters['eventHandler']('exibirDados').exibirDados(item)
     }
   },
   watch: {
@@ -83,13 +83,12 @@ export default {
       this.loadEncontros();
     }
   },
-  created() {
-    //this.$store.state.currentComponentPage = this;
-    this.$store.state.searchComponent = this;
-  },
-  mounted() {
-    this.loadEncontros();
-  }
+    created() {
+        },
+    mounted() {
+        this.$store.commit('setEventHandler', {eventName: 'pesquisar', handler: this})
+        this.loadEncontros();
+    }
 };
 </script>
 
