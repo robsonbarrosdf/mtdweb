@@ -11,17 +11,10 @@ export default new Vuex.Store({
         isMenuVisible: true,
         perfilSelecionado: null,
         user: userFake,
-        //currentComponentPage: null
-        // searchComponent: null,
-        // displayResultComponent: null,
-        // encontroSelecionado: null,
-
-        infoPagina: null,
 
         _eventHandler: new Map()
     },
     getters: {
-        // eventBusPage: (state, eventName) => state._eventBusPage.get(eventName)
         eventHandler: state => eventName => state._eventHandler.get(eventName)
     },
     mutations: {
