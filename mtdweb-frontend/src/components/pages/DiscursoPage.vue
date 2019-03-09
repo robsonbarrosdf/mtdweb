@@ -68,15 +68,24 @@ export default {
         getEncontro(codEncontro) {
             return axios.get(`http://localhost:4000/encontros/${codEncontro}`)
                 .then(res => res.data)
-        }        
+        }, 
+
+        iniciarPagina() {
+            const rota = this.$route.path
+            this.$store.commit("setPerfilSelecionado", rota);
+            this.loadDiscursosDoUsuario()
+        }
     },
     beforeCreate() {
         // this.$store.commit("setPerfilSelecionado", 'Discurso');
-        const rota = this.$route.path
-        this.$store.commit("setPerfilSelecionado", rota);
     },
     created() {
-        this.loadDiscursosDoUsuario()
+        this.iniciarPagina()
+    },
+    watch: {
+        $route(to) {
+            this.iniciarPagina()
+        }
     }
 
 }
