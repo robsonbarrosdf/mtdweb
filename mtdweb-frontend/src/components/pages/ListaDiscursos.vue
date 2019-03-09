@@ -1,7 +1,6 @@
 <template>
   <div id="listaDiscursos">
-    <hr/>
-    <b-table id="tabela" small borderless :items="meusDiscursos" :fields="colunas" @row-clicked="onRowClicked"></b-table>
+    <b-table small borderless :items="meusDiscursos" :fields="colunas" @row-clicked="onRowClicked"></b-table>
   </div>
 </template>
 
@@ -73,29 +72,24 @@ export default {
 
 <style>
     #listaDiscursos {
-    /* background-color: red; */
-    color: #fff;
-    /* height: 400px;
-            overflow: hidden; */
-    }
-
-    #tabela {
-    /* overflow: hidden; */
-    /* height: 400px; */
-    border: none;
+      height: 800px;;
+      display: block;
+      overflow: auto;
+      padding-top: 10px;
     }
 
     .cabecalho,
     .dados {
-    color: #fff;
+      color: #fff;
     }
 
     .cabecalho:hover,
     .dados:hover {
-    background-color: rgb(56, 170, 185);
+      background-color: rgb(56, 170, 185);
     }
 
     #listaEncontros hr {
         background-color: red;
     }
+
 </style>

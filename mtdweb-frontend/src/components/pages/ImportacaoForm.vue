@@ -17,6 +17,7 @@
         </b-table>
 
         <b-pagination size="md" v-model="page" :total-rows="count" :per-page="limit" />
+        <!-- <b-pagination size="sm" v-model="page" :total-rows="count" :per-page="limit" /> -->
     </div>
 </template>
 

@@ -1,10 +1,11 @@
 <template>
     <div id="navegacaoDiscurso" class='my-2'>
         <div id='pageInfo' class='p-1'>
-            <b-pagination-nav size='sm' total-rows='100' :number-of-pages='1' />
+            <b-pagination-nav size='sm' v-model='discurso.nuOrdem' total-rows='100' :number-of-pages='1' />
+            <!-- <b-pagination-nav size="md" v-model="page" :total-rows="count" :per-page="limit" /> -->
         </div>
         <div id='discursoInfo' class='p-1'>
-            <h3>{{discurso.nmOrador + '(' + discurso.sgPartido + '-' + discurso.sgUf + ')'}}</h3>
+            <h3>{{'#' + discurso.nuOrdem + ' ' + discurso.nmOrador + ' (' + discurso.sgPartido + '-' + discurso.sgUf + ')'}}</h3>
             <h5>{{discurso.dtHoraInicioDiscurso}}</h5>
         </div>
     </div>
@@ -14,6 +15,13 @@
 export default {
     name: 'CardNavegacaoDiscurso',
     props: ['discurso'],
+    data: function() {
+        return {
+            page: 1,
+            count: 100,
+            limit: 10
+        }
+    }
 }
 </script>
 
