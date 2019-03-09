@@ -40,7 +40,7 @@ export default {
             //let data = new Date();
             //console.log(data.toISOString().substr(0, 10).split('-').reverse().join('/'));
         }, 
-        pesquisar() {
+        loadDiscursosFake() {
             this.encontroSelecionado = {
                 numEncontro: '--',
                 anoEncontro: '--',
@@ -52,7 +52,7 @@ export default {
             this.discursos.push(new Discurso(2, 2, 'PLEN 219/2019', 20, 1, 'Indexador A', 'Sumarista B', 'Revisor C'))
         },
         
-        displayItemSelecionado(encontro) {
+        exibirDados(encontro) {
             this.loadDiscursosEncontro(encontro)
         },
 
@@ -79,7 +79,7 @@ export default {
                     })
                 })
             } else if (encontro.numEncontro % 2 == 0) {
-                this.pesquisar()
+                this.loadDiscursosFake()
             } else {
                 axios.get('http://localhost:4000/discursosparadistribuir', {
                     params:{
@@ -92,10 +92,9 @@ export default {
 
     },
     created() {
-        //this.$store.state.currentComponentPage = this
-        this.$store.state.displayResultComponent = this
-    },
+        },
     mounted() {
+        this.$store.commit('setEventHandler', {eventName: 'exibirDados', handler: this})
         this.loadDiscursos()
     }
 }

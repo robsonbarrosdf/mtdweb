@@ -45,8 +45,9 @@ export default {
     methods: {
         pesquisar(e) {
             e.preventDefault()
-            if (this.$store.state.searchComponent) {
-                this.$store.state.searchComponent.pesquisar(this.parametros)
+            let comp = this.$store.getters['eventHandler']('pesquisar')
+            if (comp) {
+                comp.pesquisar(this.parametros)
             }
         }
     }

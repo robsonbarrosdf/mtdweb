@@ -93,11 +93,10 @@ export default {
         }
     },
     created() {
-        //this.$store.state.currentComponentPage = this
-        this.$store.state.displayResultComponent = this
-        this.$store.state.searchComponent = this
     },    
     mounted() {
+        // this.$store.commit('setEventHandler', {eventName: 'exibirDados', handler: this})
+        this.$store.commit('setEventHandler', {eventName: 'pesquisar', handler: this})
         this.loadEncontros()
     }
 }
