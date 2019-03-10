@@ -15,7 +15,7 @@
                 <b-form-input size='sm' id='titulo' type='text' placeholder='...' v-model='parametros.titulo'/>
             </b-form-group>
             
-            <b-button size='sm' type='submit' variant="primary" @click="pesquisar">Pesquisar</b-button>
+            <b-button size='sm' type='submit' variant="primary" @click.prevent="pesquisar">Pesquisar</b-button>
             <!-- <b-button type='submit' variant="primary">Pesquisar</b-button> -->
         </b-form>
     </div>    
@@ -44,7 +44,7 @@ export default {
     },
     methods: {
         pesquisar(e) {
-            e.preventDefault()
+            // e.preventDefault()
             let comp = this.$store.getters['eventHandler']('pesquisar')
             if (comp) {
                 comp.pesquisar(this.parametros)
