@@ -1,7 +1,10 @@
 <template>
     <div class="distribuicao-form">
         <CardCabecalhoEncontro :encontro='encontroSelecionado'/>
-        <b-table class='tableDistribuicao' small hover :items='discursos' :fields='colunas'></b-table>
+        <b-table class='tableDistribuicao' small hover :items='discursos' :fields='colunas'>
+            <template slot="actions" >
+            </template>            
+        </b-table>
     </div>
 </template>
 
@@ -28,7 +31,7 @@ export default {
                 {key: 'indexador', sortable: true},
                 {key: 'sumarista', sortable: true},
                 {key: 'revisor', sortable: true},
-                //{key: 'acoes', label: 'Ações'},
+                {key: 'acoes', label: 'Ações'},
             ]
         }
     },
