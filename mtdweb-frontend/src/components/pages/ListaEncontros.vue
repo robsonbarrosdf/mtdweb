@@ -95,7 +95,8 @@ export default {
 <style>
   #listaEncontros {
     /* background-color: red; */
-    color: #fff;
+    /* color: #fff; */
+    color: #000;
     /* height: 400px;
           overflow: hidden; */
   }
@@ -108,12 +109,13 @@ export default {
 
   .cabecalho,
   .dados {
-    color: #fff;
+  /* color: #fff; */
+    color: #000;
   }
 
   .cabecalho:hover,
   .dados:hover {
-    background-color: rgb(56, 170, 185);
+    background-color: rgb(255, 56, 83);
   }
 
   #listaEncontros hr {

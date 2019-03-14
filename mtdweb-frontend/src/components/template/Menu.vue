@@ -41,13 +41,14 @@ export default {
 
     .menu {
         grid-area: menu;
-        background: linear-gradient(to right, #232526, #414345);
+        /* background: linear-gradient(to right, #232526, #414345); */
+        background-color: rgb(239,239,239);
 
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
-        /* width: 300px; */
         min-width: 300px;
+        /* width: 300px; */
         /* overflow: hidden; */
     }
 

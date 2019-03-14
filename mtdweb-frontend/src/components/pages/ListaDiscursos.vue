@@ -43,10 +43,11 @@ export default {
     .cabecalho,
     .dados {
         color: #fff;
+        color: #000;
     }
 
     .cabecalho:hover,
     .dados:hover {
-        background-color: rgb(56, 170, 185);
+        background-color: rgb(185, 56, 56);
     }
 </style>
