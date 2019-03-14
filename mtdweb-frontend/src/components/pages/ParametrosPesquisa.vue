@@ -74,8 +74,8 @@ export default {
         flex-direction: column;
         border-radius: 8px;
         margin-bottom: 0px;
-        /* color: #fff; */
-        color: black;
+        color: #fff;
+        /* color: black; */
         padding: 0;
     }        
 

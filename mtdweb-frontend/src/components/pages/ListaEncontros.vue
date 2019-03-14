@@ -109,8 +109,8 @@ export default {
 
   .cabecalho,
   .dados {
-  /* color: #fff; */
-    color: #000;
+  color: #fff;
+    /* color: #000; */
   }
 
   .cabecalho:hover,

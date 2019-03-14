@@ -16,8 +16,8 @@ export default {
 
     #content {
         grid-area: content;
-        /* background-color: #efefef;  */
-        background-color: rgb(249,249,249); 
+        background-color: #efefef; 
+        /* background-color: rgb(249,249,249);  */
     }
 
 </style>
